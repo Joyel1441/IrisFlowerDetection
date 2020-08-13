@@ -35,6 +35,7 @@ def classify():
         error["type_error"] = "" 
       except:
         error["type_error"] = "ERROR: All values should be number type"
+        flower["flower"] = None
         return redirect(url_for("form"))
       classifier = joblib.load("classifier.pkl")
       pred = classifier.predict(arr)
