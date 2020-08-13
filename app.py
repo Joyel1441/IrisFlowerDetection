@@ -4,7 +4,8 @@ import joblib
 import random
 
 app = Flask(__name__)
-app.config["SECRET_KEY"] = "25fgsw463"
+key = random.randint(0,100000)
+app.config["SECRET_KEY"] = str(key)
 flower = {"flower":None}
 error= {"type_error":""}
 
