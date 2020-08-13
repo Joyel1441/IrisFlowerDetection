@@ -40,8 +40,8 @@ def classify():
       pred = classifier.predict(arr)
       iris_class = {0:"Iris-Setosa",1:"Iris-Versicolour",2:"Iris-Verginica"}
       flower["flower"]=iris_class[pred[0]]
-      return redirect(url_for("form"))
-   else:
+      return redirect(url_for("form"))   
+  else:
       return redirect(url_for("form"))
   
 if __name__ == "__main__":
