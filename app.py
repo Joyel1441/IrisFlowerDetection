@@ -1,13 +1,11 @@
 from flask import Flask,render_template,request,redirect,url_for,session
 import numpy as np
-from sklearn.model_selection import train_test_split
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn.metrics import confusion_matrix
 import joblib
 import random
 
 app = Flask(__name__)
-app.config["SECRET_KEY"] = "fusuhhu"
+app.config["SECRET_KEY"] = "25fgsw463"
+flower = {"flower":None}
 
 @app.route("/",methods=["POST","GET"])
 def form():
@@ -22,7 +20,7 @@ def form():
     session["pw"] = pw
     return redirect(url_for("classify"))
   else:
-    return render_template("form.html")
+    return render_template("form.html",flower=flower["flower"])
 
 @app.route("/type")
 def classify():
@@ -35,9 +33,10 @@ def classify():
       classifier = joblib.load("classifier.pkl")
       pred = classifier.predict(arr)
       iris_class = {0:"Iris-Setosa",1:"Iris-Versicolour",2:"Iris-Verginica"}
-      return render_template("form.html",flower=iris_class[pred[0]])
-  else:
-     return redirect(url_for("form.html"))
+      flower["flower"]=iris_class[pred[0]]
+      return redirect(url_for("form"))
+   else:
+      return redirect(url_for("form"))
   
 if __name__ == "__main__":
   app.run(debug = True)
