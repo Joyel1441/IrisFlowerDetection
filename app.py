@@ -19,8 +19,8 @@ def form():
     session["sw"] = sw
     session["pl"] = pl
     session["pw"] = pw
-    return redirect(url_for("classify"))
-   else:
+    return redirect(url_for("classify")) 
+  else:
      return render_template("form.html",flower=flower["flower"],error=error["type_error"])
 
 @app.route("/type")
