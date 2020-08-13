@@ -6,6 +6,7 @@ import random
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "25fgsw463"
 flower = {"flower":None}
+error= {"type_error":""}
 
 @app.route("/",methods=["POST","GET"])
 def form():
@@ -20,7 +21,7 @@ def form():
     session["pw"] = pw
     return redirect(url_for("classify"))
   else:
-    return render_template("form.html",flower=flower["flower"])
+     return render_template("form.html",flower=flower["flower"],error=error["type_error"])
 
 @app.route("/type")
 def classify():
@@ -29,7 +30,12 @@ def classify():
       sw = session["sw"]
       pl = session["pl"]
       pw = session["pw"]
-      arr = np.array([[float(sl),float(sw),float(pl),float(pw)]])
+      try:
+        arr = np.array([[float(sl),float(sw),float(pl),float(pw)]])
+        error["type_error"] = "" 
+      except:
+        error["type_error"] = "ERROR: All values should be number type"
+        return redirect(url_for("form"))
       classifier = joblib.load("classifier.pkl")
       pred = classifier.predict(arr)
       iris_class = {0:"Iris-Setosa",1:"Iris-Versicolour",2:"Iris-Verginica"}
