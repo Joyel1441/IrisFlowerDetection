@@ -1,11 +1,9 @@
-from flask import Flask,render_template,request,redirect,url_for,session
+from flask import Flask,render_template,request,redirect,url_for
 import numpy as np
 import joblib
-import random
 
 app = Flask(__name__)
-key = random.randint(0,100000)
-app.config["SECRET_KEY"] = str(key)
+data = {"sl":None,"sw":None,"pl":None,"pw":None}
 flower = {"flower":None}
 error= {"type_error":""}
 
@@ -16,21 +14,21 @@ def form():
     sw = request.form["sw"]
     pl = request.form["pl"]
     pw = request.form["pw"]
-    session["sl"] = sl
-    session["sw"] = sw
-    session["pl"] = pl
-    session["pw"] = pw
+    data["sl"] = sl
+    data["sw"] = sw
+    data["pl"] = pl
+    data["pw"] = pw
     return redirect(url_for("classify")) 
   else:
      return render_template("form.html",flower=flower["flower"],error=error["type_error"])
 
 @app.route("/type")
 def classify():
-  if "sl" and "sw" and "pl" and "pw" in session:
-      sl = session["sl"]
-      sw = session["sw"]
-      pl = session["pl"]
-      pw = session["pw"]
+  if "sl" and "sw" and "pl" and "pw" in data:
+      sl = data["sl"]
+      sw = data["sw"]
+      pl = data["pl"]
+      pw = data["pw"]
       try:
         arr = np.array([[float(sl),float(sw),float(pl),float(pw)]])
         error["type_error"] = "" 
