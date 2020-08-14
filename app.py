@@ -32,14 +32,21 @@ def classify():
         arr = np.array([[float(sl),float(sw),float(pl),float(pw)]])
         error["type_error"] = "" 
       except:
+        data["sl"] = None
+        data["sw"] = None
+        data["pl"] = None
+        data["pw"] = None
         flower["flower"] = None
         error["type_error"] = "ERROR: All values should be number type"
-        flower["flower"] = None
         return redirect(url_for("form"))
       classifier = joblib.load("classifier.pkl")
       pred = classifier.predict(arr)
       iris_class = {0:"Iris-Setosa",1:"Iris-Versicolour",2:"Iris-Verginica"}
       flower["flower"]=iris_class[pred[0]]
+      data["sl"] = None
+      data["sw"] = None
+      data["pl"] = None
+      data["pw"] = None
       return redirect(url_for("form"))   
   
 if __name__ == "__main__":
