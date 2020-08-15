@@ -20,7 +20,7 @@ def form():
     try:
         arr = np.array([[float(sl),float(sw),float(pl),float(pw)]])
         error["type_error"] = "" 
-      except:
+    except:
         error["type_error"] = "ERROR: All values should be number type"
         return render_template("form.html",error=error["type_error"])
     classifier = joblib.load("classifier.pkl")
