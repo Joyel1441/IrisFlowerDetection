@@ -29,5 +29,5 @@ def form():
  return render_template("form.html",error=error["type_error"]) 
      
 if __name__ == "__main__":
-  app.run(debug = True)
+  app.run()
   
