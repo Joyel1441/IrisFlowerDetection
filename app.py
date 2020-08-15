@@ -7,7 +7,14 @@ data = {"sl":None,"sw":None,"pl":None,"pw":None}
 flower = {"flower":None}
 error= {"type_error":""}
 
-@app.route("/",methods=["POST","GET"])
+@app.route("/")
+def index():
+    data = {"sl":None,"sw":None,"pl":None,"pw":None}
+    flower = {"flower":None}
+    error= {"type_error":""}
+    return redirect(url_for("form"))
+
+@app.route("/form",methods=["POST","GET"])
 def form():
   if request.method == "POST":
     sl = request.form["sl"]
